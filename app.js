@@ -33,7 +33,7 @@ function jsonParser(stringValue) {
     return objectValue['text'];
  }
 
-app.get('/', verifyWebhook);
+app.get('/verify', verifyWebhook);
 
 app.get("/", (req, res)=> {
     console.log("hello world")
