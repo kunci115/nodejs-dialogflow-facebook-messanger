@@ -1,7 +1,4 @@
 const express = require("express");
-const dialogflow = require('@google-cloud/dialogflow');
-const uuid = require('uuid');
-const { welcome, defaultFallback } = require("./intents/welcomeExit");
 const {get_intent} = require("./chatbot-helper")
 const app = express();
 const verifyWebhook = require('./verify-webhook');
