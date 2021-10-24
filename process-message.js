@@ -161,7 +161,7 @@ const sendAttachmentMessageReplyNodejsIntent = (userId) => {
       }
     );
   }
-module.exports = (event, payload_type) => {
+module.exports = async (event, payload_type) => {
   if (payload_type==="message"){  
   message = event.message.text;
   }
@@ -179,58 +179,80 @@ module.exports = (event, payload_type) => {
     },
   };
 
-  sessionClient
-    .detectIntent(request)
-    .then(responses => {
-      const result = responses[0].queryResult;
-      console.log(result.parameters.fields)
+  const responses = await sessionClient
+    .detectIntent(request);
+
+    const result = responses[0].queryResult;
+    // console.log(result)
+    console.log(result.action)
+    
     //   if (result.intent.displayName == }
 
     if (result.intent.displayName == "Default Welcome Intent"){
-        sendTextMessage(userId, 'Welcome to Generator Discount bot for Rino developer course')
-        sendTemplateMessage(userId)
+        await sendTextMessage(userId, 'Welcome to Generator Discount bot for Rino developer course')
+        await sendTemplateMessage(userId)
         return ;      
     }
     if (result.intent.displayName == "python"){
-        sendAttachmentMessageReplyPythonIntent(userId)
+        await sendAttachmentMessageReplyPythonIntent(userId)
         return;
     }
     if (result.intent.displayName == "intent_nodejs"){
-        sendAttachmentMessageReplyNodejsIntent(userId)
+        await sendAttachmentMessageReplyNodejsIntent(userId)
         return;
     }
 
-    if (result.intent.displayName == "grade_experiences"){
+    if (result.intent.displayName == "grade_experiences" || result.intent.displayName == "intent_nodejs_years_exp" || result.intent.displayName =="intent_python_years_experience"){
         var voucher_code = makeid(20)
         if (result.parameters.fields.senior_exp.stringValue.length > 0){
-            sendTextMessage(userId, "Please wait a secs... we generating your voucher code for senior exp"),
-            sendTextMessage(userId, "Here is your voucher code: "+ + voucher_code.toString()),
-            sendTextMessage(userId, "Now you have your code, Is there anything that i can help again?")
+            await sendTextMessage(userId, "Please wait a secs... we generating your voucher code for senior exp"),
+            await sendTextMessage(userId, "Here is your voucher code: "+  voucher_code.toString()),
+            await sendTextMessage(userId, "Now you have your code, Is there anything that i can help again?")
             return
         }
         if (result.parameters.fields.junior_exp.stringValue.length > 0){
-            sendTextMessage(userId, "Please wait a secs... we generating your voucher code for junior exp")
-            sendTextMessage(userId, "Here is your voucher code: "+ voucher_code.toString())
-            sendTextMessage(userId, "Now you have your code, Is there anything that i can help again?")
+            await sendTextMessage(userId, "Please wait a secs... we generating your voucher code for junior exp")
+            await sendTextMessage(userId, "Here is your voucher code: "+ voucher_code.toString())
+            await sendTextMessage(userId, "Now you have your code, Is there anything that i can help again?")
             return
         
         }
-    
+     
     else{
-        sendTextMessage(userId, "We can't recognize your experience, please type your experience with other words")
+        await sendTextMessage(userId, "We can't recognize your experience, please type your experience with other words")
+        return
          }
 
     }
-    if (result.intent.displayName == "Default Fallback Intent"){
-        sendTextMessage(userId, "I Don't Recognize your words, i'll study about it. please try another phrase")
-    }
- 
 
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
+    if (result.intent.displayName == "intent_nodejs_years_help_yes"){
+        await sendTextMessage(userId, "I only trained to handle voucher discount for your course")
+        await sendTemplateMessage(userId)
+        return;
+    }
+    if (result.intent.displayName == "intent_nodejs_years_help_no"){
+        await sendTextMessage(userId, "Thanks For coming!")
+        return;
+    }
+
+    if (result.intent.displayName == "intent_python_years_help_yes"){
+        await sendTextMessage(userId, "I only trained to handle voucher discount for your course")
+        await sendTemplateMessage(userId)
+        return;
+    }
+    if (result.intent.displayName == "intent_python_years_help_no"){
+        await sendTextMessage(userId, "Thanks For coming!")
+        return;
+    }
+
+    if (result.intent.displayName == "Default Fallback Intent"){
+        await sendTextMessage(userId, "I Don't Recognize your words, i'll study about it. please try another phrase")
+    }
+    if (result.action == "smalltalk.agent.acquaintance"){
+        await sendTextMessage(userId, result.fulfillmentText)
+    }
 }
+
 function makeid(length) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
