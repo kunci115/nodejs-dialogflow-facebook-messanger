@@ -1,17 +1,13 @@
 const fetch = require('node-fetch');
 const uuid = require('uuid');
 
-
-// You can find your project ID in your Dialogflow agent settings
-const projectId = 'lulokal'; //https://dialogflow.com/docs/agents#settings
+const projectId = 'lulokal'; 
 const sessionId = uuid.v4();
 const languageCode = 'en-US';
 const dialogflow = require('@google-cloud/dialogflow');
 const sessionClient = new dialogflow.SessionsClient();
 const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
 var nodemailer = require('nodemailer');
-// Remember the Page Access Token you got from Facebook earlier?
-// Don't forget to add it to your `variables.env` file.
 const { FACEBOOK_ACCESS_TOKEN } = process.env;
 
 const sendTextMessage = (userId, text) => {
@@ -206,13 +202,15 @@ module.exports = async (event, payload_type) => {
         var voucher_code = makeid(20)
         if (result.parameters.fields.senior_exp.stringValue.length > 0){
             await sendTextMessage(userId, "Please wait a secs... we generating your voucher code for senior exp"),
-            await sendTextMessage(userId, "Here is your voucher code: "+  voucher_code.toString()),
+            await sendTextMessage(userId, "Here is your voucher code: "+  voucher_code.toString())
+            await sendTextMessage(userId, "Friendly reminder, your code will expired within 24h")
             await sendTextMessage(userId, "Now you have your code, Is there anything that i can help again?")
             return
         }
         if (result.parameters.fields.junior_exp.stringValue.length > 0){
             await sendTextMessage(userId, "Please wait a secs... we generating your voucher code for junior exp")
             await sendTextMessage(userId, "Here is your voucher code: "+ voucher_code.toString())
+            await sendTextMessage(userId, "Friendly reminder, your code will expired within 24h")
             await sendTextMessage(userId, "Now you have your code, Is there anything that i can help again?")
             return
         
