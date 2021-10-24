@@ -185,6 +185,7 @@ module.exports = (event, payload_type) => {
       const result = responses[0].queryResult;
       console.log(result.parameters.fields)
     //   if (result.intent.displayName == }
+
     if (result.intent.displayName == "Default Welcome Intent"){
         sendTextMessage(userId, 'Welcome to Generator Discount bot for Rino developer course')
         sendTemplateMessage(userId)
@@ -198,23 +199,30 @@ module.exports = (event, payload_type) => {
         sendAttachmentMessageReplyNodejsIntent(userId)
         return;
     }
-    if (result.parameters.fields.junior_exp.stringValue.length > 0){
-        sendTextMessage(userId, "Please wait a secs... we generating your voucher code for junior exp")
-        sendTextMessage(userId, "Here is your voucher code: "+ voucher_code.toString())
-        sendTextMessage(userId, "Now you have your code, Is there anything that i can help again?")
-        return
+
+    if (result.intent.displayName == "grade_experiences"){
+        var voucher_code = makeid(20)
+        if (result.parameters.fields.senior_exp.stringValue.length > 0){
+            sendTextMessage(userId, "Please wait a secs... we generating your voucher code for senior exp"),
+            sendTextMessage(userId, "Here is your voucher code: "+ + voucher_code.toString()),
+            sendTextMessage(userId, "Now you have your code, Is there anything that i can help again?")
+            return
+        }
+        if (result.parameters.fields.junior_exp.stringValue.length > 0){
+            sendTextMessage(userId, "Please wait a secs... we generating your voucher code for junior exp")
+            sendTextMessage(userId, "Here is your voucher code: "+ voucher_code.toString())
+            sendTextMessage(userId, "Now you have your code, Is there anything that i can help again?")
+            return
         
-    }
+        }
+    
+    else{
+        sendTextMessage(userId, "We can't recognize your experience, please type your experience with other words")
+         }
 
-    if (result.parameters.fields.senior_exp.stringValue.length > 0){
-        sendTextMessage(userId, "Please wait a secs... we generating your voucher code for senior exp"),
-        sendTextMessage(userId, "Here is your voucher code: 3123"),
-        sendTextMessage(userId, "Now you have your code, Is there anything that i can help again?")
-        return
     }
-
-    else {
-        sendTextMessage(userId, "Sorry. unexpected argument, i'm still learning")
+    if (result.intent.displayName == "Default Fallback Intent"){
+        sendTextMessage(userId, "I Don't Recognize your words, i'll study about it. please try another phrase")
     }
  
 
@@ -223,13 +231,13 @@ module.exports = (event, payload_type) => {
       console.error('ERROR:', err);
     });
 }
-// function makeid(length) {
-//     var result           = '';
-//     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-//     var charactersLength = characters.length;
-//     for ( var i = 0; i < length; i++ ) {
-//       result += characters.charAt(Math.floor(Math.random() * 
-//  charactersLength));
-//    }
-//    return result;
-// }
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+   return result;
+}
