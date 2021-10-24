@@ -1,5 +1,4 @@
 const express = require("express");
-const {get_intent} = require("./chatbot-helper")
 const app = express();
 const verifyWebhook = require('./verify-webhook');
 const messageWebhook = require('./message-webhook');
