@@ -10,30 +10,12 @@ app.use(
   )
 app.use(express.json())
 
-app.post('/webhook', (req, res) => {
-    // console.log(req.body)
-    message = jsonParser(req.body)
-    // console.log(data)
-    // res.send(data)
-    get_intent('lulokal', message)
-    .then((data) => {
-      res.send(data);
-        // console.log(data)
-    })
-    // .catch((err) => console.log(err));
-  })
 
-app.post('/', messageWebhook);
 
-  
-function jsonParser(stringValue) {
+app.post('/webhook', messageWebhook);
 
-    var string = JSON.stringify(stringValue);
-    var objectValue = JSON.parse(string);
-    return objectValue['text'];
- }
 
-app.get('/verify', verifyWebhook);
+app.get('/webhook', verifyWebhook);
 
 app.get("/", (req, res)=> {
     console.log("hello world")
