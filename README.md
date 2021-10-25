@@ -32,7 +32,7 @@ Kazam_screenrecord is demo for this
 
 
 # Pre-requisites
-- Install [Node.js](https://nodejs.org/en/) version 8.0.0
+- Install [Node.js](https://nodejs.org/en/) 
 
 
 # Getting started
