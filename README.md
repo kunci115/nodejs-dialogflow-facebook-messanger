@@ -25,4 +25,4 @@ Time completion on every issue logged in each commit, but from my side:
 - 24 October Chatbot finished
 - 25 October Create this readme and fix some issues (deployment ready)
 
-I deploy it on heroku
+I deploy it on heroku https://chatbot-service-rino.herokuapp.com/
