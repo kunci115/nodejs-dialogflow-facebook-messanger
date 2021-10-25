@@ -1,7 +1,7 @@
 # nodejs-dialogflow-facebook-messanger
 nodejs-dialogflow-facebook-messanger
 
-
+Chatbot can be accessed in: https://www.facebook.com/rinodevelopercourse/
 1. Chatbot should be triggered with greet intent or something, it will return suggestion what course 
 discount that they want to get, i made only 2 courses discount generator(nodejs and python)
 2. After picking the domain the user is interested in, he/she should be asked about
