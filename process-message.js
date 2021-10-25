@@ -7,7 +7,6 @@ const languageCode = 'en-US';
 const dialogflow = require('@google-cloud/dialogflow');
 const sessionClient = new dialogflow.SessionsClient();
 const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
-var nodemailer = require('nodemailer');
 const { FACEBOOK_ACCESS_TOKEN } = process.env;
 
 const sendTextMessage = (userId, text) => {

@@ -1,4 +1,7 @@
 const express = require("express");
+const dialogflow = require('@google-cloud/dialogflow');
+const uuid = require('uuid');
+const {get_intent} = require("./chatbot-helper")
 const app = express();
 const verifyWebhook = require('./verify-webhook');
 const messageWebhook = require('./message-webhook');
@@ -12,13 +15,11 @@ app.use(express.json())
 
 
 
-app.post('/webhook', messageWebhook);
+app.post('/', messageWebhook);
+
+  
+
+app.get('/', verifyWebhook);
 
 
-app.get('/webhook', verifyWebhook);
-
-app.get("/", (req, res)=> {
-    console.log("hello world")
-    res.send("helloworld")
-})
 app.listen(process.env.PORT || "3000");
