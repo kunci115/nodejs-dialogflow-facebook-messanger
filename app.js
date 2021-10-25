@@ -21,4 +21,4 @@ app.get("/", (req, res)=> {
     console.log("hello world")
     res.send("helloworld")
 })
-app.listen(process.env.PORT || "80");
+app.listen(process.env.PORT || "3000");
